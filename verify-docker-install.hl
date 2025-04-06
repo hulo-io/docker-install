@@ -1,21 +1,19 @@
 //!/bin/bash -e
 (
 	echo "INFO: Executing installation script!"
-	sh build/install.sh
+	sh "build/install.sh"
 )
 
 // Verify that we can at least get version output
-if ! docker --version; then
-	echo "ERROR: Did Docker get installed?"
-	exit 1
-fi
+if ! $(docker --version) {
+	throw "ERROR: Did Docker get installed?"
+}
 
 // Attempt to run a container if not in a container
-if [ ! -f /.dockerenv  ]; then
-	if ! docker run --rm hello-world; then
-		echo "ERROR: Could not get docker to run the hello world container"
-		exit 2
-	fi
-fi
+if f"/.dockerenv".is_dir() {
+    if ! $(docker run --rm hello-world) {
+        throw Error(code: 2, msg: "ERROR: Could not get docker to run the hello world container")
+    }
+}
 
 echo "INFO: Successfully verified docker installation!"
