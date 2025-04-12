@@ -1,7 +1,5 @@
-${
-    //!/bin/sh
-    set -e
-}
+//!/bin/sh
+set -e
 // Docker Engine for Linux installation script.
 //
 // This script is intended as a convenient way to configure docker's package
@@ -291,7 +289,7 @@ fn check_forked() {
 		${set +e}
 		lsb_release -a -u > null $stderr>$stdout
 		$lsb_release_exit_code := ${$?}
-		${set -e}
+		set -e
 
 		// Check if the command has exited successfully, it means we're in a forked distro
 		if $lsb_release_exit_code == "0" {
@@ -505,9 +503,9 @@ Please get Docker Desktop from https://www.docker.com/products/docker-desktop/
 				if version_gte "23.0"; then
 						pkgs="$pkgs docker-buildx-plugin"
 				fi
-				if ! is_dry_run; then
+				if ! is_dry_run {
 					set -x
-				fi
+				}
 				$sh_c "DEBIAN_FRONTEND=noninteractive apt-get -y -qq install $pkgs >/dev/null"
 			)
 			echo_docker_as_nonroot
@@ -607,17 +605,16 @@ Please get Docker Desktop from https://www.docker.com/products/docker-desktop/
 				if version_gte "23.0"; then
 						pkgs="$pkgs docker-buildx-plugin"
 				fi
-				if ! is_dry_run; then
+				if ! $is_dry_run {
 					set -x
-				fi
+				}
 				$sh_c "$pkg_manager $pkg_manager_flags install $pkgs"
 			)
 			echo_docker_as_nonroot
 			exit 0
 			;;
 		sles)
-			echo "Effective v27.5, please consult SLES distro statement for s390x support."
-			exit 1
+			throw "Effective v27.5, please consult SLES distro statement for s390x support."
 			;;
 		*)
 			if [ -z "$lsb_dist" ]; then
