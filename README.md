@@ -7,7 +7,7 @@
 
 ---
 
-English| [中文](README.zh-CN.md)
+English| [简体中文](README.zh-CN.md)
 
 > This is an experimental project that aims to rewrite the original bash scripts in the [docker-install](https://github.com/docker/docker-install) source code using the [Hulo](https://github.com/hulo-lang) language.
 > By transforming imperative shell scripts into declarative Hulo code, the project explores modern script practices and maintainability.
